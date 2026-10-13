@@ -1,0 +1,11 @@
+# Local development database. Spring Boot starts this automatically on `./mvnw spring-boot:run`
+# (spring-boot-docker-compose). Credentials are for local development only.
+services:
+  postgres:
+    image: 'postgres:17-alpine'
+    environment:
+      - 'POSTGRES_DB=ticketbooking'
+      - 'POSTGRES_USER=ticketbooking'
+      - 'POSTGRES_PASSWORD=ticketbooking'
+    ports:
+      - '5432'
