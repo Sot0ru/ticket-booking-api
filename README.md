@@ -80,5 +80,5 @@ Requirements: Java 25, Docker Desktop (running).
 - [ ] Architecture diagram and design decisions in this README
 - [ ] Optional: load test (e.g. k6) and measured results
 
-first commit
+
 
