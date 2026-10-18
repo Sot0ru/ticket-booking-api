@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:8080
+
+### Health check: is the app running?
+GET {{baseUrl}}/actuator/health
+
+### 1. Create event → 201 Created
+# @name createEvent
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "name": "Jazz Night",
+  "venue": "Meistersingerhalle Nuremberg",
+  "startsAt": "2027-03-12T19:00:00Z",
+  "endsAt": "2027-03-12T22:00:00Z"
+}
+
+### 2. List all events → 200
+GET {{baseUrl}}/events
+
+### 3. Get the event created in request 1 → 200
+# Send request 1 first: the id is taken from its response
+GET {{baseUrl}}/events/{{createEvent.response.body.$.id}}
+
+### 4. Unknown event → 404
+GET {{baseUrl}}/events/999999
+
+### 5. Blank name → 400
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "name": "",
+  "venue": "Meistersingerhalle Nuremberg",
+  "startsAt": "2027-03-12T19:00:00Z",
+  "endsAt": "2027-03-12T22:00:00Z"
+}
+
+### 6. Start in the past → 400
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "name": "Jazz Night",
+  "venue": "Meistersingerhalle Nuremberg",
+  "startsAt": "2020-03-12T19:00:00Z",
+  "endsAt": "2020-03-12T22:00:00Z"
+}
+
+### 7. End before start → 400 expected
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "name": "Jazz Night",
+  "venue": "Meistersingerhalle Nuremberg",
+  "startsAt": "2027-03-12T22:00:00Z",
+  "endsAt": "2027-03-12T19:00:00Z"
+}
+
+### 8. Missing fields → 400
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "name": "Jazz Night"
+}
