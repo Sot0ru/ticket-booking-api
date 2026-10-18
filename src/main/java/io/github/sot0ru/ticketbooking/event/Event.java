@@ -1,10 +1,10 @@
 package io.github.sot0ru.ticketbooking.event;
 
+import java.time.Instant;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-
-import java.time.Instant;
 
 @Entity
 public class Event {
@@ -19,14 +19,17 @@ public class Event {
 
 	private Instant startsAt;
 
+	private Instant endsAt;
+
 	protected Event() {
 		// required by JPA
 	}
 
-	public Event(String name, String venue, Instant startsAt) {
+	public Event(String name, String venue, Instant startsAt, Instant endsAt) {
 		this.name = name;
 		this.venue = venue;
 		this.startsAt = startsAt;
+		this.endsAt = endsAt;
 	}
 
 	public Long getId() {
@@ -45,4 +48,7 @@ public class Event {
 		return startsAt;
 	}
 
+	public Instant getEndsAt(){
+		return endsAt;
+	}
 }
