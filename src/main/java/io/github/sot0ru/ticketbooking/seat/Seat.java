@@ -14,7 +14,7 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.Instant;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"event_id", "row_label", "seat_number"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "event_id", "row_label", "seat_number" }))
 public class Seat {
 
 	@Id
@@ -31,11 +31,15 @@ public class Seat {
 	@Enumerated(EnumType.STRING)
 	private SeatStatus status = SeatStatus.AVAILABLE;
 
-	/** Set while the seat is HELD; a scheduled job releases the seat once this point has passed. */
+	/**
+	 * Set while the seat is HELD; a scheduled job releases the seat once this point
+	 * has passed.
+	 */
 	private Instant heldUntil;
 
 	// TODO (week 1): add a version field for optimistic locking.
-	//  Question to answer in your README: what happens without it when two requests hold the same seat at once?
+	// Question to answer in your README: what happens without it when two requests
+	// hold the same seat at once?
 
 	protected Seat() {
 		// required by JPA
@@ -47,8 +51,10 @@ public class Seat {
 		this.seatNumber = seatNumber;
 	}
 
-	// TODO (week 1): add state transitions, e.g. hold(Instant until), book(), release().
-	//  Each one should reject invalid transitions (e.g. booking a seat that is not HELD).
+	// TODO (week 1): add state transitions, e.g. hold(Instant until), book(),
+	// release().
+	// Each one should reject invalid transitions (e.g. booking a seat that is not
+	// HELD).
 
 	public Long getId() {
 		return id;
